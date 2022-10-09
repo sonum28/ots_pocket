@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ots_pocket/config/shared_preferences_helper.dart';
+import 'package:ots_pocket/home_screen.dart';
 import 'package:ots_pocket/login_screen.dart';
+import 'package:ots_pocket/main.dart';
 import 'package:ots_pocket/on_boarding_screen.dart';
 import 'package:ots_pocket/widget_util/image_util.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -13,41 +13,50 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String? isOnBoardingScreenLaunch;
+  String? token;
+
   @override
   void initState() {
-    super.initState();
     _navigationToLoginScreen();
+    super.initState();
   }
 
   _navigationToLoginScreen() async {
-    await Future.delayed(const Duration(seconds: 5), () {});
+    isOnBoardingScreenLaunch =
+        await appStorage?.retrieveEncryptedData('isOnBoardingScreenLaunch');
+    token = await appStorage?.retrieveEncryptedData('token');
 
-    final preferences = await SharedPreferences.getInstance();
-    bool? boolValuesSP  = preferences.getBool('isOnBoardingScreenLaunch');
-
-    if(boolValuesSP ?? false) {
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()));
-    }else {
-      // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const OnBoardingScreen()));
-    }
+    (isOnBoardingScreenLaunch == "YES")
+        ? (token != null)
+            ? Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()))
+            : Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const LoginScreen()))
+        : Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const OnBoardingScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-          child: ImageUtil(
-        width: 200.0,
-        height: 160.0,
-        path: "asset/images/splash_screen_image.png",
-      )),
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              colorFilter: ColorFilter.mode(
+                  Colors.white.withOpacity(0.8), BlendMode.hardLight),
+              image: AssetImage("asset/images/background_image.jpeg"),
+              fit: BoxFit.fill),
+        ),
+        child: Center(
+            child: ImageUtil(
+              width: 200.0,
+              height: 160.0,
+              path: "asset/images/app_launcher_icon.png",
+            ),),
+      ),
     );
   }
 }

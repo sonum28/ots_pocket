@@ -1,19 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:ots_pocket/config/shared_preferences_helper.dart';
-import 'package:ots_pocket/login_screen.dart';
-import 'package:ots_pocket/on_boarding_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ots_pocket/bloc/branch/branch_bloc.dart';
+import 'package:ots_pocket/bloc/login/login_bloc.dart';
+import 'package:ots_pocket/bloc/user/get_user_details/get_user_details_bloc.dart';
+import 'package:ots_pocket/bloc/user/registration/registration_bloc.dart';
+import 'package:ots_pocket/config/stroage.dart';
+import 'package:ots_pocket/config/repo_factory.dart';
 import 'package:ots_pocket/splash_screen.dart';
-import 'package:ots_pocket/widget_util/image_util.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-bool? isOnBoardingScreenLaunch;
-
+final EncryptedSharedPrefManager? appStorage =
+    EncryptedSharedPrefManager.getInstance();
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  isOnBoardingScreenLaunch = await preferences.getBool('isOnBoardingScreenLaunch');
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => BranchBloc(
+            repoFactory: RepoFactory(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => UserRegistrationBloc(
+            repoFactory: RepoFactory(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => LoginBloc(
+            repoFactory: RepoFactory(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => GetUserDetailsUserBloc(
+            repoFactory: RepoFactory(),
+          ),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -22,12 +48,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'OTS Pocket',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        //primarySwatch: Colors.grey,
+        drawerTheme: DrawerThemeData(
+          backgroundColor: Colors.white,
+        ),
       ),
-      home: (isOnBoardingScreenLaunch ?? false) ? LoginScreen() : OnBoardingScreen() //const LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }

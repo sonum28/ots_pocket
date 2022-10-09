@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:ots_pocket/config/shared_preferences_helper.dart';
 import 'package:ots_pocket/login_screen.dart';
+import 'package:ots_pocket/main.dart';
 import 'package:ots_pocket/widget_util/image_util.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -15,13 +14,8 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   void initState() {
-    _updateKey();
+    appStorage?.saveEncryptedData('isOnBoardingScreenLaunch', 'YES');
     super.initState();
-  }
-
-  _updateKey() async {
-    SharedPreferencesHelper()
-        .setBoolToSP(key: 'isOnBoardingScreenLaunch', value: true);
   }
 
   @override
@@ -38,22 +32,22 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   title: "One app for all your business needs",
                   body:
                       "Mange and track your employee data and tasks from one app.",
-                  image: "asset/images/splash_screen_image.png"),
+                  image: "asset/images/on_boarding_image_1.png"),
               getPageViewModel(
                   title: "Manage TimeSheets",
                   body:
                       "Manage users timesheets and get real time update from the employees using this application.",
-                  image: "asset/images/splash_screen_image.png"),
+                  image: "asset/images/on_boarding_image_2.png"),
               getPageViewModel(
                   title: "Make accounting simple",
                   body:
                       "Manage all the HR related tasks from one app without westing time on huge excel files.",
-                  image: "asset/images/splash_screen_image.png"),
+                  image: "asset/images/on_boarding_image_3.png"),
               getPageViewModel(
                   title: "Save time",
                   body:
                       "Using our OTS Pocket software make all the boring paperworks from one click in your cell phone.",
-                  image: "asset/images/splash_screen_image.png"),
+                  image: "asset/images/on_boarding_image_4.png"),
             ],
             done: getTextButton(buttonText: "Login"),
             next: const Icon(Icons.arrow_forward_ios, color: Color(0xFF157B4F)),
@@ -94,10 +88,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       {required String title, required String image, required String body}) {
     return PageViewModel(
       title: title,
-      image: const ImageUtil(
+      image: ImageUtil(
         width: 300.0,
         height: 300.0,
-        path: "asset/images/splash_screen_image.png",
+        path: image,
       ),
       body: body,
       decoration: getPageDecoration(),
