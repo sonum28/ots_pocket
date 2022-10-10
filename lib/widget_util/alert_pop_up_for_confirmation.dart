@@ -12,7 +12,6 @@ showAlertPopUpForConfirmation({
   required String buttonTextForCancel,
   required Color buttonCancelTextColor,
   required double buttonCancelTextSize,
-  
 }) {
   showDialog(
     context: context,
