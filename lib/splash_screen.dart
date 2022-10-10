@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
             child: ImageUtil(
               width: 200.0,
               height: 160.0,
-              path: "asset/images/app_launcher_icon.png",
+              path: "asset/images/clientlogo.png",
             ),),
       ),
     );

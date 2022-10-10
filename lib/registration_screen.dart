@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ots_pocket/bloc/user/registration/registration_bloc.dart';
 import 'package:ots_pocket/bloc/user/registration/registration_state.dart';
 import 'package:ots_pocket/bloc/user/user_event.dart';
+import 'package:ots_pocket/login_screen.dart';
 import 'package:ots_pocket/models/user_registration_model.dart';
 import 'package:ots_pocket/widget_util/alert_pop_up_for_error_msg.dart';
 import 'package:ots_pocket/widget_util/app_indicator.dart';
@@ -174,31 +175,31 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: Column(
                     children: [
                       const Center(
-                        child: ImageUtil(
-                      width: 200.0,
-                      height: 160.0,
-                      path: "asset/images/logo.png",
-                    )),
-                    const SizedBox(
-                      height: 40.0,
-                    ),
-                    const Text(
-                      "Register Yourself",
-                      style: TextStyle(
-                          fontSize: 26.0,
-                          color: Color(0xFF000000),
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                    const Text(
-                      "to OTS-Pocket",
-                      style: TextStyle(
-                          fontSize: 13.0,
-                          color: Color(0xFF717171),
-                          fontWeight: FontWeight.w400),
-                    ),
+                          child: ImageUtil(
+                        width: 200.0,
+                        height: 160.0,
+                        path: "asset/images/clientlogo.png",
+                      )),
+                      const SizedBox(
+                        height: 00.0,
+                      ),
+                      const Text(
+                        "Register Yourself",
+                        style: TextStyle(
+                            fontSize: 26.0,
+                            color: Color(0xFF000000),
+                            fontWeight: FontWeight.w700),
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      const Text(
+                        "to OTS-Pocket",
+                        style: TextStyle(
+                            fontSize: 13.0,
+                            color: Color(0xFF717171),
+                            fontWeight: FontWeight.w400),
+                      ),
                       const SizedBox(
                         height: 32.0,
                       ),
@@ -255,7 +256,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24.0),
                           ),
-                          backgroundColor: Color(0xFF157B4F),
+                          surfaceTintColor: Color(0xFF157B4F),
                         ),
                         onPressed: registrationButtonActive()
                             ? () {
@@ -273,7 +274,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         text: TextSpan(
                           children: <TextSpan>[
                             TextSpan(
-                              text: "Back to ",
+                              text: "Already have an account? ",
                               style: TextStyle(
                                   fontSize: 13.0,
                                   color: Color(0xFF000000),
@@ -282,7 +283,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             TextSpan(
                               text: "Login",
                               style: TextStyle(
-                                  fontSize: 13.0,
+                                  fontSize: 15.0,
                                   color: Color(0xFF157B4F),
                                   fontWeight: FontWeight.w400),
                               recognizer: TapGestureRecognizer()
@@ -290,8 +291,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegistrationScreen(),
+                                      builder: (context) => const LoginScreen(),
                                     ),
                                   );
                                 },

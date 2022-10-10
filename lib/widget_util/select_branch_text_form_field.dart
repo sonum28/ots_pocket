@@ -23,7 +23,7 @@ class SelectBranchTextFormField extends StatelessWidget {
       readOnly: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
-        hintText: "Bangalore",
+        hintText: "TX",
         labelText: "Select Branch",
         suffixIcon: Icon(
           Icons.arrow_drop_down,

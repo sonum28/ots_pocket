@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ots_pocket/bloc/user/get_user_details/get_user_details_bloc.dart';
 import 'package:ots_pocket/bloc/user/get_user_details/get_user_details_state.dart';
 import 'package:ots_pocket/bloc/user/user_event.dart';
+import 'package:ots_pocket/drawer1.dart';
 import 'package:ots_pocket/models/user_details_model.dart';
 import 'package:ots_pocket/my_drawer.dart';
 import 'package:ots_pocket/widget_util/app_indicator.dart';
@@ -19,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int? totalUser;
   int? nonActiveUser;
+  bool? isnotification = false;
 
   @override
   void initState() {
@@ -35,9 +38,26 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         elevation: 0.3,
         title: Image.asset(
-          "asset/images/app_logo.jpeg",
-          height: 120,
+          "asset/images/clientImage.jpeg",
+          height: 40,
         ),
+        actions: [
+          FlatButton(
+            textColor: Theme.of(context).primaryColor,
+            onPressed: () {
+              isnotification == true
+                  ? Fluttertoast.showToast(msg: "You have some Notifications!")
+                  : Fluttertoast.showToast(msg: "There is no Notifications!");
+            },
+            child: Icon(
+              isnotification == false
+                  ? Icons.notifications_outlined
+                  : Icons.notifications,
+              color: isnotification == false ? Colors.grey : Colors.red,
+              //shape: CircleBorder(side: BorderSide(color: Colors.transparent)
+            ),
+          ),
+        ],
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
@@ -64,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     .toList() ??
                 [];
             nonActiveUser = getNonActiveUser.length;
+            nonActiveUser == 0 ? isnotification = false : isnotification = true;
 
             return Padding(
               padding:
@@ -106,8 +127,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: getCard(
                                   cardBgColor: Color(0xFF9c8e8b),
-                                  title: "Employee Expenses",
+                                  title: "Expenses",
                                   iconName: Icons.currency_exchange),
+                            ),
+                            Expanded(
+                              child: getCard(
+                                cardBgColor: Color(0xFF43c85d),
+                                title: "Daily Reports",
+                                iconName: Icons.pages_outlined,
+                              ),
                             ),
                           ],
                         )
@@ -175,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrower1(),
     );
   }
 
@@ -183,21 +211,31 @@ class _HomeScreenState extends State<HomeScreen> {
       {required Color cardBgColor,
       required String title,
       required IconData iconName}) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      color: cardBgColor,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-        child: Column(
-          children: [
-            getCardData1(title: title, iconName: iconName),
-            SizedBox(
-              height: 32.0,
-            ),
-            getCardData2(),
-          ],
+    return GestureDetector(
+      onTap: () {
+        if (title == "User")
+          Fluttertoast.showToast(msg: "Navigate to Users screen");
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14.0),
+        ),
+        color: cardBgColor,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+          child: Column(
+            children: [
+              getCardData1(title: title, iconName: iconName),
+              SizedBox(
+                height: 32.0,
+              ),
+              title == "User"
+                  ? getCardData2()
+                  : SizedBox(
+                      height: 24,
+                    ),
+            ],
+          ),
         ),
       ),
     );
@@ -209,13 +247,16 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           title,
           style: TextStyle(
-            color: Color(0xFF000000),
+            color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 16.0,
+            fontSize: 20.0,
           ),
         ),
         Spacer(),
-        Icon(iconName),
+        Icon(
+          iconName,
+          color: Colors.white,
+        ),
       ],
     );
   }
@@ -224,21 +265,22 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       children: [
         Text(
+          "Total User: ",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 14.0,
+          ),
+        ),
+        Text(
           "${totalUser}",
           style: TextStyle(
-            color: Color(0xFF000000),
+            color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 16.0,
+            fontSize: 24.0,
           ),
         ),
         Spacer(),
-        Text(
-          "${nonActiveUser}",
-          style: TextStyle(
-              color: Color(0xFF000000),
-              fontWeight: FontWeight.bold,
-              fontSize: 16.0),
-        ),
       ],
     );
   }

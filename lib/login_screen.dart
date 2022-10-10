@@ -63,12 +63,8 @@ class _LoginScreenState extends State<LoginScreen> {
         } else if (state is LoginSuccessState) {
           AppIndicator.popDialogContext();
           log("LoginSuccessState");
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                  const HomeScreen()));
-
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()));
         } else if (state is LoginFailedState) {
           AppIndicator.popDialogContext();
           log("LoginFailedState");
@@ -111,17 +107,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         const Center(
                             child: ImageUtil(
-                          width: 200.0,
-                          height: 160.0,
-                          path: "asset/images/logo.png",
+                          width: 220.0,
+                          height: 180.0,
+                          path: "asset/images/clientlogo.png",
                         )),
                         const SizedBox(
-                          height: 40.0,
+                          height: 0.0,
                         ),
                         const Text(
                           "Welcome",
                           style: TextStyle(
-                              fontSize: 26.0,
+                              fontSize: 30.0,
                               color: Color(0xFF000000),
                               fontWeight: FontWeight.w700),
                         ),
@@ -129,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 8.0,
                         ),
                         const Text(
-                          "OTS-Pocket Login Page",
+                          "Users Login Page",
                           style: TextStyle(
                               fontSize: 13.0,
                               color: Color(0xFF717171),
@@ -159,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(
-                          height: 48.0,
+                          height: 22.0,
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -170,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             minimumSize: const Size.fromHeight(48.0),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24.0)),
-                            backgroundColor: Color(0xFF157B4F),
+                            surfaceTintColor: Color(0xFF157B4F),
                           ),
                           onPressed: (isEmailTextFormFieldNotEmpty &&
                                   isPasswordTextFormFieldNotEmpty)
@@ -201,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Text(
                                 "OR",
                                 style: TextStyle(
-                                    fontSize: 11.0,
+                                    fontSize: 14.0,
                                     color: Color(0xFF717171),
                                     fontWeight: FontWeight.normal),
                               ),
@@ -231,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextSpan(
                                 text: "Register Now",
                                 style: TextStyle(
-                                    fontSize: 13.0,
+                                    fontSize: 15.0,
                                     color: Color(0xFF157B4F),
                                     fontWeight: FontWeight.w400),
                                 recognizer: TapGestureRecognizer()
