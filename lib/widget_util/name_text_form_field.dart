@@ -28,7 +28,7 @@ class NameTextFormField extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),
-          hintText: "Mohammad Sonu",
+          hintText: "Your Name",
           hintStyle: TextStyle(
             fontSize: 16.0,
             color: Color(0xFF919191),

@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'OTS Pocket',
       theme: ThemeData(
-        //primarySwatch: Colors.grey,
+        primaryColor: Color(0xFF157B4F),
         drawerTheme: DrawerThemeData(
           backgroundColor: Colors.white,
         ),
